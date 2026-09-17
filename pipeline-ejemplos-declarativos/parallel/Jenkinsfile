@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Etapa automatica con un cron') {
+            parallel {
+                stage('Sub-etapa 1') {
+                    steps {
+                        echo 'Ejecutando sub-etapa 1 en paralelo'
+                    }
+                }
+                stage('Sub-etapa 2') {
+                    steps {
+                        echo 'Ejecutando sub-etapa 2 en paralelo'
+                    }
+                }
+
+                stage('Sub-etapa 3') {
+                    steps {
+                        echo 'Ejecutando sub-etapa 3 en paralelo'
+                    }
+                }
+            }
+        }
+
+        stage('Etapa final') {
+            steps {
+                echo 'Ejecutando la etapa final después de las sub-etapas en paralelo'
+            }
+        }
+    }
+}

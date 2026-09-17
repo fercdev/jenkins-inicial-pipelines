@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Requiere aprobacion') {
+            steps {
+                input '¿Desea continuar con la ejecucion del pipeline?'
+            }
+        }
+
+        stage('Ejecucion, post confirmacion') {
+            steps {
+                echo 'Pipeline en ejecucion...'
+            }
+        }
+    }
+}

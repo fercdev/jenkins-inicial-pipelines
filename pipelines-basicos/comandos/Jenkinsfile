@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Comandos basicos') {
+            steps {
+                echo 'Building...'
+                sh 'whoami'
+                sh "pwd"
+                sh "ls -la"
+                sh "echo 'Finished listing files'"
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'This will always run'
+        }
+        success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+    }
+}

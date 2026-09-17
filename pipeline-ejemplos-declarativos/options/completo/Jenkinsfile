@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    options {
+        timeout(time: 2, unit: 'MINUTES')
+        retry(2)
+        timestamps()
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '5', daysToKeepStr: '7')) // conserva solo los ultimos 5 builds y los ultimos 7 dias
+        skipDefaultCheckout() // evitar el checkout por defecto
+        quietPeriod(5) // espera 5 segundos antes de iniciar el build
+    }
+
+    stages {
+        stage('Stage timeout') {
+            steps {
+                sleep 200 // Sleep for 200 seconds
+            }
+        }
+    }
+}

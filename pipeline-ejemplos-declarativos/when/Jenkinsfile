@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    parameters {
+        booleanParam(name: 'IS_ACTIVE', defaultValue: true, description: 'Parameter para validar si esta activo')
+    }
+
+    stages {
+        stage('Stage condicional') {
+            when {
+                expression {
+                    return params.IS_ACTIVE
+                }
+            }
+
+            steps {
+               echo 'Stage condicional ejecutado porque IS_ACTIVE es true'
+            }
+        }
+
+        stage('Stage alternativo') {
+            when {
+                not {
+                    expression {
+                        return params.IS_ACTIVE
+                    }
+                }
+            }
+
+            steps {
+                echo 'Stage alternativo ejecutado porque IS_ACTIVE es false'
+            }
+        }
+    }
+}

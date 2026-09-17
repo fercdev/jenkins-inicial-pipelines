@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'APP', defaultValue: 'MyApp', description: 'Application name')
+        text(name: 'MENSAJE', description: 'Ingresar un mensaje', defaultValue: 'Parameter de tipo texto largo')
+        booleanParam(name: 'IS_ACTIVE', defaultValue: true, description: 'Parameter para validar si esta activo')
+        choice(name: 'ENV', choices: ['production', 'staging', 'development'],  defaultValue: 'production', description: 'Environment')
+        password(name: 'PASSWORD', description: 'Ingresar la contraseña', defaultValue: 'secret')
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                echo "App: ${APP}"
+                echo "Mensaje: ${MENSAJE}"
+                echo "Is Active: ${IS_ACTIVE}"
+                echo "Environment: ${ENV}"
+                echo "Password: ${PASSWORD}"
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'This will always run'
+        }
+        success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+    }
+}

@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+
+    options {
+        timeout(time: 2, unit: 'MINUTES')
+        retry(2)
+    }
+
+    stages {
+        stage('Stage timeout') {
+            steps {
+                sleep 200 // Sleep for 200 seconds
+            }
+        }
+    }
+}

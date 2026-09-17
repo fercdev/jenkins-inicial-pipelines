@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Etapa de matrix OS') {
+            matrix {
+                axes {
+                    axis {
+                        name 'OS'
+                        values 'Linux', 'Windows', 'Mac'
+                    }
+                }
+                stages {
+                    stage('Sub-etapa OS') {
+                        steps {
+                            echo "Ejecutando en ${OS}"
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Etapa de matrix NodeVersion') {
+            matrix {
+                axes {
+                    axis {
+                        name 'NodeVersion'
+                        values '14', '16', '18'
+                    }
+                }
+                stages {
+                    stage('Sub-etapa NodeVersion') {
+                        steps {
+                            echo "Ejecutando con NodeVersion ${NodeVersion}"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

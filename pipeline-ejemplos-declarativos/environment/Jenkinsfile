@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+
+    environment {
+        APP = 'MyApp'
+        ENV = 'production'
+        VERSION = '1.0.0'
+        DESCRIPTION = 'My application description'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                echo "App: ${APP}"
+                echo "Environment: ${ENV}"
+                echo "Version: ${VERSION}"
+                echo "Description: ${DESCRIPTION}"
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'This will always run'
+        }
+        success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+    }
+}

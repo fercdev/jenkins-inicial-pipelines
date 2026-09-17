@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clonar repositorio....') {
+            steps {
+               git 'https://github.com/fercdev/backend-sonar-node-api.git'
+            }
+        }
+
+        stage("Listar archivos") {
+            steps {
+                sh "ls -la"
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'This will always run'
+        }
+        success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+    }
+}

@@ -1,0 +1,15 @@
+pipeline {
+    agent any
+
+    triggers {
+        cron( '*/15 * * * *')
+    }
+
+    stages {
+        stage('Etapa automatica con un cron') {
+            steps {
+                echo 'Building... triggered by cron'
+            }
+        }
+    }
+}
