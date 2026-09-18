@@ -1,0 +1,33 @@
+services:
+  jenkins-agent:
+    image: jenkins/inbound-agent:latest-rhel-ubi9-jdk21
+    container_name: jenkins-agent-1
+    user: root
+    environment:
+      JENKINS_URL: http://jenkins:8080
+      JENKINS_AGENT_NAME: agent1
+      JENKINS_SECRET: 3942e34c30d58e31f2ff1c12da0d2276bb9e99a43f22c4eb31ff5ccb7d802ead
+      JENKINS_AGENT_WORKDIR: /home/jenkins/agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    privileged: true
+    networks:
+      - agent-net
+  jenkins-agent-2:
+    image: jenkins/inbound-agent:latest-rhel-ubi9-jdk21
+    container_name: jenkins-agent-2
+    user: root
+    environment:
+      JENKINS_URL: http://jenkins:8080
+      JENKINS_AGENT_NAME: agent2
+      JENKINS_SECRET: 952300ffb29c100ca5e67ca1680894024ef0616e1d186576ae2f54144fb16678
+      JENKINS_AGENT_WORKDIR: /home/jenkins/agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    privileged: true
+    networks:
+      - agent-net
+networks:
+  agent-net:
+    external: true
+    name: jenkins_default

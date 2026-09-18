@@ -1,0 +1,59 @@
+1- Construir la imagen custom de Jenkins:
+	docker build -t jenkins-docker-agent:latest .        --> ejecutar el comando en la ruta donde se encuentra el Dockerfile
+
+2- Levantar el docker compose:
+	docker compose up -d
+
+3- Revisar la web en el puerto 9091 --> localhost:9091
+
+4- nos pide buscar el password de jenkins usar el comando:
+	docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+
+5- copiar el password obtenido y agregarlo en el input de la UI de Jenkins
+
+6- Escoger la opcion de instalar plugins recomendados por Jenkins
+
+7- Crear un usuario administrador 
+
+9- Sumar un agente
+
+9.1 - Ingresar a administar Jenkins   ---> Nodes --> Nuevo nodo
+
+9.2 - Ingresar nombre de nodo: agent-1 
+
+9.3- Agregar directorio remoto: /home/jenkins
+
+9.4- En metodo de ejecucion: Launch agent by connect....
+
+9.5- Proceder a guardar
+
+9.6- Entrar en el agente creado y copiar el password de conexion 
+
+9.7- una vez tenemos el password proceder a crear el agente:
+
+9.8- crear un agente de Jenkins :
+
+docker run -d --name jenkins-agent-1 -e JENKINS_URL=http://jenkins:8080 -e JENKINS_AGENT_NAME=agent1 -e JENKINS_SECRET=3942e34c30d58e31f2ff1c12da0d2276bb9e99a43f22c4eb31ff5ccb7d802ead -e JENKINS_AGENT_WORKDIR=/home/jenkins --network jenkins_default jenkins/inbound-agent:latest-rhel-ubi9-jdk21
+
+
+Para contruir la imagen del agente 1 de jenkins 
+10- primero usamos el archivo Dockerfile de la carpeta "agente-dockerfile"
+
+	usamos el comando de docker:
+	 docker build -t jenkins-custom-agent:latest .      (tener en cuenta que debe ser dentro de la carpeta "agente-dockerfile")
+
+11- verificar que se ha creado 
+
+	docker images jenkins-custom-agent:latest
+
+12- consideraciones 
+	12.1- Verificar que el contenedor de "jenkins" esta operativo
+	12.2- Verificar que el secret sea el que nos provee el servidor de jenkins en la web "b3eebb398bfc04f5bfe3ed7d1f4b7076de022e95b7d2e26c636d8955886d84f1"
+	12.3- Verificar que estamos en la misma red
+
+	levantamos el archivo "docker-jenkins-agent.yml"
+
+	con el comando: 
+	docker compose -f docker-jenkins-agent.yml up -d
+
+	

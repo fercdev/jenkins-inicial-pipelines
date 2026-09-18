@@ -1,0 +1,21 @@
+pipeline{
+    agent {
+        docker {
+            image 'python:3.12-alpine'
+        }
+    }
+
+    stages {
+        stage('Check python version') {
+            steps {
+                sh 'python --version'
+            }
+        }
+
+        stage('Check pip version') {
+            steps {
+                sh 'pip --version'
+            }
+        }
+    }
+}

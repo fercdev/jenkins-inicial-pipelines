@@ -1,0 +1,83 @@
+pipeline {
+    agent none
+
+    stages {
+        stage('Clonar repositorio....') {
+            agent any
+            steps {
+               git 'https://github.com/fercdev/backend-sonar-node-api.git'
+            }
+        }
+
+        stage("Listar archivos") {
+            agent any
+            steps {
+                sh "ls -la"
+            }
+        }
+
+        stage('Check node version (agent node)') {
+            agent {
+                docker {
+                    image 'node:24-alpine'
+                }
+            }
+            
+            steps {
+                sh 'node -v'
+            }
+        }
+
+        stage('Instalar dependencias') {
+            agent {
+                docker {
+                    image 'node:24-alpine'
+                }
+            }
+            
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage ("Ejecutar tests") {
+            agent {
+                docker {
+                    image 'node:24-alpine'
+                }
+            }
+            steps {
+                sh 'npm test'
+            }
+        }
+
+        stage ("Validar docker") {
+            agent any
+            steps {
+              sh 'docker --version'
+            }
+        }
+
+        stage ("Alpine image") {
+            agent {
+                docker {
+                    image 'alpine:latest'
+                }
+            }
+            steps {
+              sh 'echo "Running in Alpine container"'
+              sh 'uname -a'
+              sh 'ls -la'
+            }
+        }
+
+
+
+        stage ("Mensaje final") {
+            agent any
+            steps {
+              echo "Pipeline completed successfully!"
+            }
+        }
+    }
+}

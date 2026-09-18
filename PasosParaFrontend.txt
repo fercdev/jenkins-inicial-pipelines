@@ -1,0 +1,11 @@
+1- Crear una cuenta de Vercel
+    1.1 Crear un nuevo token de Vercel y setearlo en Jenkins
+    1.2 Utilizarlo con la funcion credentials('') dentro del pipeline 
+2- Tener configurado Ngrok
+    ngrok http 8080 --> el puerto que esten usando 
+
+3- Crear un webhook desde el repositorio de Github hasta Jenkins
+    -> https://fc822b29ede6.ngrok-free.app/github-webhook/  --> tener en cuenta que la url es dependiendo del NGROK
+
+4- Crear el proyecto y el multibranch
+

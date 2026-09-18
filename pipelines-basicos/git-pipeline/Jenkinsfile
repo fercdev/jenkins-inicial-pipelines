@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:24-alpine'
+        }
+    }
 
     stages {
         stage('Clonar repositorio....') {
@@ -13,17 +17,31 @@ pipeline {
                 sh "ls -la"
             }
         }
-    }
 
-    post {
-        always {
-            echo 'This will always run'
+        stage('Check node version (agent node)') {
+            
+            steps {
+                sh 'node -v'
+            }
         }
-        success {
-            echo 'This will run only if successful'
+
+        stage('Instalar dependencias') {
+            
+            steps {
+                sh 'npm install'
+            }
         }
-        failure {
-            echo 'This will run only if failed'
+
+        stage ("Ejecutar tests") {
+            steps {
+                sh 'npm test'
+            }
+        }
+
+        stage ("Mensaje final") {
+            steps {
+              echo "Pipeline completed successfully!"
+            }
         }
     }
 }

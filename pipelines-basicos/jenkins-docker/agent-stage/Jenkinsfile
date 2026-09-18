@@ -1,0 +1,41 @@
+pipeline{
+    agent none
+
+    stages {
+        stage('Check node version (agent node)') {
+            agent {
+                docker {
+                    image 'node:24-alpine'
+                }
+            }
+
+            steps {
+                sh 'node -v'
+            }
+        }
+
+        stage('Check python version (agent python)') {
+            agent {
+                docker {
+                    image 'python:3.12-alpine'
+                }
+            }
+
+            steps {
+                sh 'python --version'
+            }
+        }
+
+        stage('check jdk 17 version (agent jdk)') {
+            agent {
+                docker {
+                    image 'openjdk:17-ea-alpine'
+                }
+            }
+
+            steps {
+                sh 'java -version'
+            }
+        }
+    }
+}

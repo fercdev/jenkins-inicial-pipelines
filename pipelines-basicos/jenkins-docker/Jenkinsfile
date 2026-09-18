@@ -1,0 +1,21 @@
+pipeline{
+    agent {
+        docker {
+            image 'node:24-alpine'
+        }
+    }
+
+    stages {
+        stage('Check node version') {
+            steps {
+                sh 'node -v'
+            }
+        }
+
+        stage('Check npm version') {
+            steps {
+                sh 'npm -v'
+            }
+        }
+    }
+}
